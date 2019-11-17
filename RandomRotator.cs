@@ -7,8 +7,6 @@ public class RandomRotator : MonoBehaviour
     public float tumble;
     private Rigidbody rb;
 
-    
-
     private void Start()
     {
         rb = GetComponent<Rigidbody>();

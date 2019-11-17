@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
-    public GameObject hazard;
+    public GameObject[] hazards;
     public Vector3 spawnValues;
     public int hazardCount;
     public float spawnWait;
@@ -25,6 +25,7 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
+        hazardCount = 3;
         gameOver = false;
         restart = false;
         restartText.text = "";
@@ -45,16 +46,23 @@ public class GameController : MonoBehaviour
                 Application.LoadLevel(Application.loadedLevel);
             }
         }
+
+        if (Input.GetKey("escape"))
+        {
+            Application.Quit();
+        }
     }
+
     IEnumerator SpawnWaves()
     {
         yield return new WaitForSeconds(startWait);
         while (true)
         {
             for (int i = 0; i < hazardCount; i++)
+
             {
+                GameObject hazard = hazards[Random.Range(0, hazards.Length)];
                 Vector3 spawnPosition = new Vector3(Random.Range(-spawnValues.x, spawnValues.x), spawnValues.y, spawnValues.z);
-                //Vector3 spawnPosition = new Vector3(Random.Range(-spawnValues.x, spawnValues.x), spawnValues.y, spawnValues.z);
                 Quaternion spawnRotation = Quaternion.identity;
                 Instantiate(hazard, spawnPosition, spawnRotation);
                 yield return new WaitForSeconds(spawnWait);
